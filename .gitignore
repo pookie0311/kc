@@ -1,0 +1,25 @@
+# Exclude Windows system directories
+AppData/
+Application Data/
+Local Settings/
+My Documents/
+Documents/
+Cookies/
+NetHood/
+PrintHood/
+Recent/
+SendTo/
+Start Menu/
+Templates/
+
+# Ignore JDK and configuration files
+.jdks/
+*.xml
+*.properties
+*.log
+
+# Ignore any temporary or system files
+*.tmp
+*.bak
+*.swp
+*.DS_Store
