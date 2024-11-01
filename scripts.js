@@ -4,15 +4,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const revealButton = document.getElementById('revealButton');
     const fullscreen = document.getElementById('fullscreen');
     const fullscreenVideo = document.getElementById('fullscreenVideo');
-    const fullscreenGif = document.getElementById('fullscreenGif');
     const mainContent = document.getElementById('mainContent');
     const header = document.querySelector('header');
-    const backgroundAudio = document.getElementById('backgroundAudio'); // New audio element
+    const backgroundAudio = document.getElementById('backgroundAudio');
 
     // Show the pop-up initially
     popup.style.display = 'flex';
 
-    // Show the full-screen overlay with video or GIF after clicking the button
+    // Show the full-screen overlay with video after clicking the button
     revealButton.addEventListener('click', () => {
         popup.style.display = 'none'; // Hide the pop-up
 
@@ -22,9 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Show the full-screen overlay
         fullscreen.style.display = 'flex';
-        fullscreenVideo.style.display = 'block'; // Show the video
-        fullscreenGif.style.display = 'none'; // Hide the GIF, if used
-
+        
         // Play the video
         fullscreenVideo.play();
     });
@@ -60,49 +57,32 @@ document.addEventListener('DOMContentLoaded', () => {
             slides[i].style.display = "none";  
         }
 
-        // Remove 'active' class from all dots
+        // Remove active class from all dots
         for (let i = 0; i < dots.length; i++) {
             dots[i].className = dots[i].className.replace(" active", "");
         }
 
-        // Show the current slide and mark the corresponding dot as active
+        // Show the current slide and add active class to the dot
         slides[slideIndex - 1].style.display = "block";  
-        if (dots.length > 0) {
-            dots[slideIndex - 1].className += " active";
-        }
+        dots[slideIndex - 1].className += " active";
     }
 
-    // Function to handle dot clicks
+    window.plusSlides = function(n) {
+        showSlides(slideIndex += n);
+    };
+
+    // Create dots for the slideshow
+    let dotsContainer = document.querySelector('.dots-container');
+    for (let i = 0; i < document.getElementsByClassName('slide').length; i++) {
+        let dot = document.createElement('span');
+        dot.className = "dot";
+        dot.onclick = function() {
+            currentSlide(i + 1);
+        };
+        dotsContainer.appendChild(dot);
+    }
+
     function currentSlide(n) {
         showSlides(slideIndex = n);
     }
-
-    // Function to handle navigation button clicks
-    function plusSlides(n) {
-        showSlides(slideIndex += n);
-    }
-
-    // Set up dots based on the number of slides
-    function setupDots() {
-        let slideContainer = document.querySelector(".dots-container");
-        let slides = document.getElementsByClassName("slide");
-
-        // Remove existing dots
-        slideContainer.innerHTML = '';
-
-        for (let i = 0; i < slides.length; i++) {
-            let dot = document.createElement("span");
-            dot.className = "dot";
-            dot.onclick = function() {
-                currentSlide(i + 1);
-            };
-            slideContainer.appendChild(dot);
-        }
-    }
-
-    setupDots();
-
-    // Add event listeners for navigation buttons
-    document.querySelector('.prev').addEventListener('click', () => plusSlides(-1));
-    document.querySelector('.next').addEventListener('click', () => plusSlides(1));
 });
